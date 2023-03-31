@@ -10,7 +10,6 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 export default function Register() {
-
   const [userCheck, setUserCheck] = useState(null)
   const [registerDetails, setRegisterDetails] = useState({
     userName: "",
@@ -117,6 +116,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'white',
     marginBottom: 10,
-    color: 'white'
+    color: 'white',
+    borderRadius: 5,
+    textAlign: 'center'
   }
 });

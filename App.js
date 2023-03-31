@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import Login from './components/Login.js'
 import Register from './components/Register.js'
 import NotesList from './components/NotesList.js';
+import CalendarComponent from './components/CalendarComponent.js';
 import { Ionicons } from '@expo/vector-icons';
 import { loadFonts } from './Fonts.js';
 import firebaseConfig from './FirebaseConfig.js';
@@ -53,6 +54,7 @@ export default function App() {
         <Tab.Screen name="Login" component={Login} />
         <Tab.Screen name="Register" component={Register} />
         <Tab.Screen name="Notes" component={NotesList} />
+        <Tab.Screen name="Calendar" component={CalendarComponent} />
       </Tab.Navigator>
     </NavigationContainer>
   )

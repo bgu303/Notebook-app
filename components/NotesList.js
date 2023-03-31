@@ -196,6 +196,8 @@ const styles = StyleSheet.create({
         color: 'white',
         marginBottom: 10,
         top: '13%',
-        zIndex: 1
+        zIndex: 1,
+        borderRadius: 5,
+        paddingLeft: 5
     },
 });

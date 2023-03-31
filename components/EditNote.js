@@ -77,7 +77,9 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: 'white',
         color: 'white',
-        marginBottom: 10
+        marginBottom: 10,
+        borderRadius: 5,
+        paddingLeft: 5
     },
     textInputNote: {
         width: 200,
@@ -86,7 +88,9 @@ const styles = StyleSheet.create({
         borderColor: 'white',
         color: 'white',
         marginBottom: 10,
-        textAlignVertical: 'top'
+        textAlignVertical: 'top',
+        borderRadius: 5,
+        paddingLeft: 5
     },
     overlayText: {
         color: 'white',
