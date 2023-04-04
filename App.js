@@ -40,6 +40,8 @@ export default function App() {
               iconName = 'add-circle-outline';
             } else if (route.name === 'Notes') {
               iconName = 'book-outline';
+            } else if (route.name === 'Calendar') {
+              iconName = 'calendar-outline'
             }
             return (
               <IoniconsTabBarIcon
