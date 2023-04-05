@@ -24,6 +24,7 @@ export default function CalendarComponent() {
 
     useEffect(() => {
         if (userId) {
+            setMarkedDates({})
             fetchNotes(userId, setNotes);
         }
     }, [userId])
@@ -40,11 +41,11 @@ export default function CalendarComponent() {
             datesArray.push(dateObj)
         })
         setDates(datesArray)
+        datesArray.forEach((date) => {
+            markedDates[date.date] = { marked: true, note: date.noteText, title: date.title }
+        })
+        setMarkedDates(markedDates)
     }, [notes])
-
-    dates.forEach((date) => {
-        markedDates[date.date] = { marked: true, note: date.noteText, title: date.title }
-    })
 
     onAuthStateChanged(auth, (user) => {
         if (user) {
