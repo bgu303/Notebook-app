@@ -1,11 +1,12 @@
-import { View, StyleSheet, Text } from 'react-native';
-import { useState, useEffect } from 'react';
+import { View, StyleSheet, Text, ScrollView } from 'react-native';
+import { useState, useEffect, useCallback } from 'react';
 import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import firebaseConfig from '../FirebaseConfig';
 import { Calendar, CalendarTheme } from 'react-native-calendars';
 import fetchNotes from '../FetchNotes';
 import moment from 'moment/moment';
+import { useFocusEffect } from '@react-navigation/native';
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -15,6 +16,7 @@ export default function CalendarComponent() {
     const userId = auth.currentUser?.uid;
     const [notes, setNotes] = useState([])
     const [dates, setDates] = useState([])
+    const [currDate, setCurrDate] = useState("")
     const [userCheck, setUserCheck] = useState(false)
     const [selectedDate, setSelectedDate] = useState({
         title: "",
@@ -22,12 +24,19 @@ export default function CalendarComponent() {
     })
     const [markedDates, setMarkedDates] = useState({});
 
-    useEffect(() => {
-        if (userId) {
-            setMarkedDates({})
-            fetchNotes(userId, setNotes);
-        }
-    }, [userId])
+    useFocusEffect(
+        useCallback(() => {
+            setSelectedDate({
+                title: "",
+                noteText: ""
+            })
+            setCurrDate("")
+            if (userId) {
+                setMarkedDates({})
+                fetchNotes(userId, setNotes);
+            }
+        }, [userId])
+    )
 
     useEffect(() => {
         const datesArray = []
@@ -56,28 +65,56 @@ export default function CalendarComponent() {
     })
 
     const handleDayPress = (day) => {
+        let dayFound = false
+        setCurrDate(day.dateString)
         const markedEntries = Object.entries(markedDates);
         for (let i = 0; i < markedEntries.length; i++) {
             const [key, value] = markedEntries[i];
             if (day.dateString === key) {
                 setSelectedDate({ ...selectedDate, title: value.title, noteText: value.note })
-                return;
+                dayFound = true
             }
         }
-        setSelectedDate({ ...selectedDate, title: "No Data", noteText: "No Data" })
+        if (!dayFound) {
+            setSelectedDate({ ...selectedDate, title: "No Data", noteText: "No Data" })
+        }
     }
 
     return (
-        <View>
+        <View style={{backgroundColor: 'black', paddingBottom: 200}}>
             {userCheck ? (<View style={styles.container}>
                 <Calendar
                     markedDates={markedDates}
                     onDayPress={handleDayPress}
+                    style={styles.calendarStyle}
+                    theme={{
+                        backgroundColor: '#000000',
+                        calendarBackground: '#000000',
+                        textSectionTitleColor: '#ffffff',
+                        textSectionTitleDisabledColor: '#d9e1e8',
+                        selectedDayBackgroundColor: '#00adf5',
+                        selectedDayTextColor: '#ffffff',
+                        todayTextColor: '#00adf5',
+                        dayTextColor: '#ffffff',
+                        textDisabledColor: '#76787a',
+                        dotColor: '#00adf5',
+                        selectedDotColor: '#ffffff',
+                        arrowColor: 'orange',
+                        disabledArrowColor: '#d9e1e8',
+                        monthTextColor: '#ffffff',
+                        indicatorColor: 'blue',
+                        textDayFontWeight: '300',
+                        textMonthFontWeight: 'bold',
+                        textDayHeaderFontWeight: '300',
+                    }}
                 />
-                <Text style={{ textAlign: 'center', fontSize: 20 }}>{selectedDate.title}</Text>
-                <Text style={{ textAlign: 'center' }}>{selectedDate.noteText}</Text>
-            </View>) : <View>
-                <Text>Login to see Calendar!</Text>
+                <Text style={styles.textTitle}>{currDate}</Text>
+                <Text style={styles.textTitle}>{selectedDate.title}</Text>
+                <ScrollView style={styles.scrollViewStyle}>
+                    <Text style={styles.text}>{selectedDate.noteText}</Text>
+                </ScrollView>
+            </View>) : <View style={styles.secondaryView}>
+                <Text style={styles.text}>Login to see Calendar!</Text>
             </View>}
         </View>
     )
@@ -85,6 +122,31 @@ export default function CalendarComponent() {
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: '5%'
+        marginTop: '5%',
+        backgroundColor: '#000000',
+
     },
+    textTitle: {
+        textAlign: 'center',
+        color: 'white',
+        fontSize: 20
+    },
+    text: {
+        textAlign: 'center',
+        color: 'white',
+    },
+    scrollViewStyle: {
+        backgroundColor: '#000000',
+        height: 150
+    },
+    calendarStyle: {
+        borderWidth: 1,
+        borderColor: '#ffffff',
+        borderRadius: 5
+    },
+    secondaryView: {
+        height: '100%',
+        alignItems: 'center',
+        top: '50%'
+    }
 });

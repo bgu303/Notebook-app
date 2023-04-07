@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
     flatListItem: {
         flex: 1,
         justifyContent: 'center',
-        backgroundColor: '#171612',
+        backgroundColor: '#323436',
         width: 300,
         borderWidth: 1,
         borderColor: 'black',

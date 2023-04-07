@@ -53,10 +53,50 @@ export default function App() {
           },
         })}
       >
-        <Tab.Screen name="Login" component={Login} />
-        <Tab.Screen name="Register" component={Register} />
-        <Tab.Screen name="Notes" component={NotesList} />
-        <Tab.Screen name="Calendar" component={CalendarComponent} />
+        <Tab.Screen
+        options={{
+          headerStyle: {
+            backgroundColor: 'black',
+            borderBottomWidth: 1,
+            borderBottomColor: '#ffffff'
+          },
+          headerTintColor: 'white'
+        }}
+        name="Login"
+        component={Login} />
+        <Tab.Screen
+        options={{
+          headerStyle: {
+            backgroundColor: 'black',
+            borderBottomWidth: 1,
+            borderBottomColor: '#ffffff'
+          },
+          headerTintColor: 'white'
+        }}
+        name="Register"
+        component={Register} />
+        <Tab.Screen
+        options={{
+          headerStyle: {
+            backgroundColor: 'black',
+            borderBottomWidth: 1,
+            borderBottomColor: '#ffffff'
+          },
+          headerTintColor: 'white'
+        }}
+        name="Notes"
+        component={NotesList} />
+        <Tab.Screen
+        options={{
+          headerStyle: {
+            backgroundColor: 'black',
+            borderBottomWidth: 1,
+            borderBottomColor: '#ffffff'
+          },
+          headerTintColor: 'white'
+        }}
+        name="Calendar"
+        component={CalendarComponent} />
       </Tab.Navigator>
     </NavigationContainer>
   )

@@ -12,7 +12,6 @@ const db = getFirestore(app);
 export default function Register() {
   const [userCheck, setUserCheck] = useState(null)
   const [registerDetails, setRegisterDetails] = useState({
-    userName: "",
     email: "",
     password: "",
     passwordAgain: ""
@@ -28,14 +27,13 @@ export default function Register() {
       const user = res.user;
       await addDoc(collection(db, "users"), {
         uid: user.uid,
-        userName,
         authProvider: "local",
         email,
       },
         setRegisterDetails({
-          userName: "",
           email: "",
-          password: ""
+          password: "",
+          passwordAgain: ""
         })
       );
       alert("Register successful!")
@@ -71,11 +69,6 @@ export default function Register() {
       {!userCheck ? (
         <View>
           <Text>Register page</Text>
-          <TextInput placeholder='username'
-            onChangeText={value => setRegisterDetails({ ...registerDetails, userName: value })}
-            style={styles.textInput}
-            value={registerDetails.userName}
-            placeholderTextColor="white"></TextInput>
           <TextInput placeholder='email'
             onChangeText={value => setRegisterDetails({ ...registerDetails, email: value })}
             style={styles.textInput}

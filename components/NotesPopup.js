@@ -42,6 +42,8 @@ export default function NotesPopup(props) {
 
 const styles = StyleSheet.create({
     overlay: {
+        borderWidth: 1,
+        borderColor: '#ffffff',
         backgroundColor: 'rgba(0, 0, 0, 0.9)',
         alignItems: 'center',
         justifyContent: 'center',

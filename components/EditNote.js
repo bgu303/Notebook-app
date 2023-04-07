@@ -15,7 +15,6 @@ const db = getFirestore(app);
 export default function EditNote(props) {
 
     const { note, setNotes, editOpen, setEditOpen, menu, setMenu } = props;
-    const dateCheck = new RegExp("([0-3][0-9])\.([0-1][0-9])\.[1-2][0-9][0-9][0-9]")
     const userId = auth.currentUser?.uid;
     const [editNote, setEditNote] = useState({
         date: note.note?.date,
