@@ -12,40 +12,40 @@ const db = getFirestore(app);
 export default function Register() {
   const [userCheck, setUserCheck] = useState(null)
   const [registerDetails, setRegisterDetails] = useState({
-    email: "",
-    password: "",
-    passwordAgain: ""
+    email: '',
+    password: '',
+    passwordAgain: ''
   })
 
   const registerWithEmailAndPassword = async (userName, email, password) => {
     if (registerDetails.password !== registerDetails.passwordAgain) {
-      alert("Passwords don't match.")
+      alert(`Passwords don't match.`)
       return;
     }
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
       const user = res.user;
-      await addDoc(collection(db, "users"), {
+      await addDoc(collection(db, 'users'), {
         uid: user.uid,
-        authProvider: "local",
+        authProvider: 'local',
         email,
       },
         setRegisterDetails({
-          email: "",
-          password: "",
-          passwordAgain: ""
+          email: '',
+          password: '',
+          passwordAgain: ''
         })
       );
-      alert("Register successful!")
+      alert('Register successful!')
     } catch (error) {
       if (error.code === 'auth/email-already-in-use') {
-        alert("Email already in use.")
+        alert('Email already in use.')
         return;
       } else if (error.code === 'auth/weak-password') {
-        alert("Password should be atleast 6 characters long")
+        alert('Password should be atleast 6 characters long')
         return;
       } else if (error.code === 'auth/invalid-email') {
-        alert("Invalid email.")
+        alert('Invalid email.')
         return;
       }
       alert(error.message);
@@ -73,22 +73,22 @@ export default function Register() {
             onChangeText={value => setRegisterDetails({ ...registerDetails, email: value })}
             style={styles.textInput}
             value={registerDetails.email}
-            placeholderTextColor="white"></TextInput>
+            placeholderTextColor='white'></TextInput>
           <TextInput placeholder='password'
             onChangeText={value => setRegisterDetails({ ...registerDetails, password: value })}
             style={styles.textInput}
             value={registerDetails.password}
-            placeholderTextColor="white"
+            placeholderTextColor='white'
             secureTextEntry={true}
           ></TextInput>
           <TextInput placeholder='password again'
             onChangeText={value => setRegisterDetails({ ...registerDetails, passwordAgain: value })}
             style={styles.textInput}
             value={registerDetails.passwordAgain}
-            placeholderTextColor="white"
+            placeholderTextColor='white'
             secureTextEntry={true}
           ></TextInput>
-          <Button title="Register" onPress={register}></Button>
+          <Button title='Register' onPress={register}></Button>
         </View>
       ) : (
         <Text style={{ color: 'white' }}>Already logged in!</Text>

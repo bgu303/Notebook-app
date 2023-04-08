@@ -1,8 +1,8 @@
 import { StyleSheet, View, Text, TextInput, Button, Alert, FlatList, TouchableOpacity } from 'react-native';
 import { useState, useEffect } from 'react';
-import { useAuthState } from "react-firebase-hooks/auth";
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
 import NotesPopup from './NotesPopup';
 import AddNote from './AddNote';
 import { Ionicons } from '@expo/vector-icons';
@@ -36,7 +36,7 @@ export default function NotesList() {
         loadFonts();
     }, []);
 
-    //Sets state when clicking "Add Note" button. True ---> Dialog opens.
+    //Sets state when clicking 'Add Note' button. True ---> Dialog opens.
     const addNoteButton = () => {
         setAddNoteDialog(true);
     }
@@ -89,7 +89,7 @@ export default function NotesList() {
                     )}
                     {!addNoteDialog && !menu && !searchState && !isVisible && (
                         <View style={{ position: 'absolute', left: 10, top: 10 }}>
-                            <Button style={styles.addButton} title="Add Note" onPress={addNoteButton}></Button>
+                            <Button style={styles.addButton} title='Add Note' onPress={addNoteButton}></Button>
                         </View>
                     )}
                     {addNoteDialog && (
@@ -121,7 +121,7 @@ export default function NotesList() {
                                         <Text style={styles.textTitle}>Title: {item.note?.title}</Text>
                                         <Text style={styles.textTitle}>Note:</Text>
                                         <Text style={styles.text}>{item.note?.noteText}</Text>
-                                        <Ionicons size={25} name="menu-outline" title="delete" style={styles.deleteButton} onPress={() => handleMenu(item)}></Ionicons>
+                                        <Ionicons size={25} name='menu-outline' title='delete' style={styles.deleteButton} onPress={() => handleMenu(item)}></Ionicons>
                                     </TouchableOpacity>
                                 }
                                 ItemSeparatorComponent={() => <View style={{ height: 15 }} />}

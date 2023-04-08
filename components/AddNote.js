@@ -1,8 +1,8 @@
 import { StyleSheet, View, Text, TextInput, Button, Alert, FlatList, TouchableOpacity } from 'react-native';
 import { useState, useEffect } from 'react';
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
+import { getFirestore, collection, addDoc } from 'firebase/firestore';
 import firebaseConfig from '../FirebaseConfig';
 import fetchNotes from '../FetchNotes';
 import { loadFonts } from '../Fonts';
@@ -17,9 +17,9 @@ export default function AddNote(props) {
 
     const { setNotes, addNoteDialog, setAddNoteDialog } = props;
     const [note, setNote] = useState({
-        date: "",
-        title: "",
-        noteText: ""
+        date: '',
+        title: '',
+        noteText: ''
     });
     const userId = auth.currentUser?.uid;
 
@@ -34,32 +34,32 @@ export default function AddNote(props) {
     const saveData = async () => {
         try {
             inputFormatter(note.date, note.title, note.noteText)
-            await addDoc(collection(db, "notedata"), {
+            await addDoc(collection(db, 'notedata'), {
                 note,
                 userId,
                 email: auth.currentUser.email
             })
             setNote({
-                date: "",
-                title: "",
-                noteText: ""
+                date: '',
+                title: '',
+                noteText: ''
             });
             fetchNotes(userId, setNotes);
             setAddNoteDialog(false)
         } catch (error) {
-            console.log("error " + error)
+            console.log('error ' + error)
             Alert.alert(error.message)
         }
     }
 
     return (
         <View style={styles.overlay}>
-            <Ionicons name="close-outline" size={30} style={styles.overlayText} onPress={handlePress}></Ionicons>
+            <Ionicons name='close-outline' size={30} style={styles.overlayText} onPress={handlePress}></Ionicons>
             <View style={styles.innerView}>
-                <TextInput placeholderTextColor="white" value={note.date} placeholder='Date (dd.mm.yyyy)' style={styles.textInput} onChangeText={value => setNote({ ...note, date: value })}></TextInput>
-                <TextInput placeholderTextColor="white" value={note.title} placeholder="Title" style={styles.textInput} onChangeText={value => setNote({ ...note, title: value })}></TextInput>
-                <TextInput multiline={true} placeholderTextColor="white" value={note.noteText} placeholder="Note" style={styles.textInputNote} onChangeText={value => setNote({ ...note, noteText: value })}></TextInput>
-                <Button onPress={saveData} title="Add note"></Button>
+                <TextInput placeholderTextColor='white' value={note.date} placeholder='Date (dd.mm.yyyy)' style={styles.textInput} onChangeText={value => setNote({ ...note, date: value })}></TextInput>
+                <TextInput placeholderTextColor='white' value={note.title} placeholder='Title' style={styles.textInput} onChangeText={value => setNote({ ...note, title: value })}></TextInput>
+                <TextInput multiline={true} placeholderTextColor='white' value={note.noteText} placeholder='Note' style={styles.textInputNote} onChangeText={value => setNote({ ...note, noteText: value })}></TextInput>
+                <Button onPress={saveData} title='Add note'></Button>
             </View>
         </View>
     )

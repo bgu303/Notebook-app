@@ -1,7 +1,7 @@
 import { View, StyleSheet, Text, ScrollView } from 'react-native';
 import { useState, useEffect, useCallback } from 'react';
-import { initializeApp } from "firebase/app";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { initializeApp } from 'firebase/app';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import firebaseConfig from '../FirebaseConfig';
 import { Calendar, CalendarTheme } from 'react-native-calendars';
 import fetchNotes from '../FetchNotes';
@@ -15,22 +15,23 @@ export default function CalendarComponent() {
 
     const userId = auth.currentUser?.uid;
     const [notes, setNotes] = useState([])
-    const [dates, setDates] = useState([])
-    const [currDate, setCurrDate] = useState("")
+    const [loading, setLoading] = useState(false)
+    const [currDate, setCurrDate] = useState('')
     const [userCheck, setUserCheck] = useState(false)
     const [selectedDate, setSelectedDate] = useState({
-        title: "",
-        noteText: ""
+        title: '',
+        noteText: ''
     })
     const [markedDates, setMarkedDates] = useState({});
 
     useFocusEffect(
         useCallback(() => {
+            setLoading(false)
             setSelectedDate({
-                title: "",
-                noteText: ""
+                title: '',
+                noteText: ''
             })
-            setCurrDate("")
+            setCurrDate('')
             if (userId) {
                 setMarkedDates({})
                 fetchNotes(userId, setNotes);
@@ -49,11 +50,13 @@ export default function CalendarComponent() {
             const dateObj = { date: formattedDate, noteText: value.note.noteText, title: value.note.title }
             datesArray.push(dateObj)
         })
-        setDates(datesArray)
+        const markedDatesObj = {};
         datesArray.forEach((date) => {
-            markedDates[date.date] = { marked: true, note: date.noteText, title: date.title }
+            markedDatesObj[date.date] = { marked: true, note: date.noteText, title: date.title }
+            console.log(markedDatesObj)
         })
-        setMarkedDates(markedDates)
+        setLoading(true)
+        setMarkedDates(markedDatesObj)
     }, [notes])
 
     onAuthStateChanged(auth, (user) => {
@@ -66,7 +69,8 @@ export default function CalendarComponent() {
 
     const handleDayPress = (day) => {
         let dayFound = false
-        setCurrDate(day.dateString)
+        const formattedDateStr = moment(day.dateString, 'YYYY-MM-DD').format('DD.MM.YYYY')
+        setCurrDate(formattedDateStr)
         const markedEntries = Object.entries(markedDates);
         for (let i = 0; i < markedEntries.length; i++) {
             const [key, value] = markedEntries[i];
@@ -76,12 +80,12 @@ export default function CalendarComponent() {
             }
         }
         if (!dayFound) {
-            setSelectedDate({ ...selectedDate, title: "No Data", noteText: "No Data" })
+            setSelectedDate({ ...selectedDate, title: 'No Data', noteText: 'No Data' })
         }
     }
 
     return (
-        <View style={{backgroundColor: 'black', paddingBottom: 200}}>
+        <View style={{ backgroundColor: 'black', paddingBottom: 200 }}>
             {userCheck ? (<View style={styles.container}>
                 <Calendar
                     markedDates={markedDates}
@@ -108,6 +112,11 @@ export default function CalendarComponent() {
                         textDayHeaderFontWeight: '300',
                     }}
                 />
+                {!loading && (
+                    <View>
+                        <Text style={styles.textTitle}>Loading...</Text>
+                    </View>
+                )}
                 <Text style={styles.textTitle}>{currDate}</Text>
                 <Text style={styles.textTitle}>{selectedDate.title}</Text>
                 <ScrollView style={styles.scrollViewStyle}>
@@ -134,6 +143,8 @@ const styles = StyleSheet.create({
     text: {
         textAlign: 'center',
         color: 'white',
+        marginLeft: 10,
+        marginRight: 10
     },
     scrollViewStyle: {
         backgroundColor: '#000000',

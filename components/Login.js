@@ -1,12 +1,12 @@
 import { StyleSheet, View, Text, TextInput, Button, Alert, FlatList } from 'react-native';
 import { useState } from 'react';
-import { useAuthState } from "react-firebase-hooks/auth";
-import { initializeApp } from "firebase/app";
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { initializeApp } from 'firebase/app';
 import {
     getAuth,
     signInWithEmailAndPassword,
     signOut,
-} from "firebase/auth";
+} from 'firebase/auth';
 import firebaseConfig from '../FirebaseConfig';
 
 const app = initializeApp(firebaseConfig);
@@ -16,20 +16,20 @@ export default function Login() {
 
     const [user, loading, error] = useAuthState(auth);
     const [loginDetails, setLoginDetails] = useState({
-        email: "",
-        password: ""
+        email: '',
+        password: ''
     })
 
     const logInWithEmailAndPassword = async (email, password) => {
         try {
             await signInWithEmailAndPassword(auth, email, password);
             setLoginDetails({
-                email: "",
-                password: ""
+                email: '',
+                password: ''
             })
-            alert("Login Successful!")
+            alert('Login Successful!')
         } catch (err) {
-            alert("Invalid username or password.");
+            alert('Invalid username or password.');
             return;
         }
     };
@@ -43,7 +43,7 @@ export default function Login() {
     }
 
     const register = () => {
-        console.log("moi")
+        console.log('moi')
     }
 
     return (
@@ -65,10 +65,10 @@ export default function Login() {
             ></TextInput>
             {!auth.currentUser ? (
                 <View>
-                    <Button title="Login" onPress={login}></Button>
+                    <Button title='Login' onPress={login}></Button>
                     <Text style={styles.text} onPress={register}>No user yet? Register HERE</Text>
                 </View>
-            ) : (<Button title="Logout" onPress={logout}></Button>)}
+            ) : (<Button title='Logout' onPress={logout}></Button>)}
         </View>
     );
 }

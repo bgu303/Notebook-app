@@ -32,7 +32,7 @@ export default function NotesPopup(props) {
 
     return (
         <View style={styles.overlay}>
-            <Ionicons name="close-outline" style={styles.overlayText} onPress={handlePress}></Ionicons>
+            <Ionicons name='close-outline' style={styles.overlayText} onPress={handlePress}></Ionicons>
             <Text style={styles.noteText}>{note?.noteText}</Text>
             <Text onPress={speak} style={styles.readNote}>Read Note</Text>
             <Text onPress={stopSpeak} style={styles.stopNote}>Stop Reading</Text>

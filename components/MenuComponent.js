@@ -1,7 +1,7 @@
 import { StyleSheet, View, Text, Alert } from 'react-native';
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-import { getFirestore, doc, deleteDoc } from "firebase/firestore";
+import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
+import { getFirestore, doc, deleteDoc } from 'firebase/firestore';
 import firebaseConfig from '../FirebaseConfig';
 import fetchNotes from '../FetchNotes';
 import { Ionicons } from '@expo/vector-icons';
@@ -40,11 +40,11 @@ export default function MenuComponent(props) {
                     style: 'cancel'
                 },
                 {
-                    text: "OK",
+                    text: 'OK',
                     onPress: async () => {
-                        await deleteDoc(doc(db, "notedata", noteId))
+                        await deleteDoc(doc(db, 'notedata', noteId))
                             .then(() => {
-                                Alert.alert("Note deleted")
+                                Alert.alert('Note deleted')
                                 fetchNotes(userId, setNotes);
                                 setMenu(false);
                             })
@@ -64,7 +64,7 @@ export default function MenuComponent(props) {
                     <Text style={styles.textDelete} onPress={() => deleteNote(note.id)}>Delete</Text>
                 </View>
             )}
-            <Ionicons name="close-outline" size={30} style={styles.overlayText} onPress={handlePress}></Ionicons>
+            <Ionicons name='close-outline' size={30} style={styles.overlayText} onPress={handlePress}></Ionicons>
             {editOpen && (
                 <EditNote
                     note={note}
@@ -88,18 +88,20 @@ const styles = StyleSheet.create({
         height: '20%',
         marginTop: 100,
         borderRadius: 10,
+        borderWidth: 1,
+        borderColor: 'white'
     },
     overlayText: {
         color: 'white',
         fontSize: 24,
         fontWeight: 'bold',
         position: 'absolute',
-        top: 25,
+        top: 10,
         right: 10
     },
     textEdit: {
         fontSize: 20,
-        color: 'blue'
+        color: '#50e0ff'
     },
     textDelete: {
         fontSize: 20,

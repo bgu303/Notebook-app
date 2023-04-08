@@ -1,8 +1,8 @@
 import { StyleSheet, View, Text, TextInput, Button, Alert, FlatList, TouchableOpacity } from 'react-native';
 import { useState, useEffect } from 'react';
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
+import { getFirestore, collection, addDoc } from 'firebase/firestore';
 import firebaseConfig from '../FirebaseConfig';
 import { updateDoc, doc } from 'firebase/firestore';
 import fetchNotes from '../FetchNotes';
@@ -25,11 +25,11 @@ export default function EditNote(props) {
     const saveEditedNote = (id) => {
         try {
             inputFormatter(editNote.date, editNote.title, editNote.noteText)
-            const noteRef = doc(db, "notedata", id)
+            const noteRef = doc(db, 'notedata', id)
             const updatedFields = {
-                "note.date": editNote.date,
-                "note.title": editNote.title,
-                "note.noteText": editNote.noteText
+                'note.date': editNote.date,
+                'note.title': editNote.title,
+                'note.noteText': editNote.noteText
             }
             updateDoc(noteRef, updatedFields)
                 .then(docRef => {
@@ -53,11 +53,11 @@ export default function EditNote(props) {
 
     return (
         <View style={styles.overlay}>
-            <TextInput value={editNote.date} onChangeText={value => setEditNote({ ...editNote, date: value })} placeholderTextColor="white" placeholder={note.note?.date} style={styles.textInput}></TextInput>
-            <TextInput value={editNote.title} onChangeText={value => setEditNote({ ...editNote, title: value })} placeholderTextColor="white" placeholder={note.note?.title} style={styles.textInput}></TextInput>
-            <TextInput value={editNote.noteText} onChangeText={value => setEditNote({ ...editNote, noteText: value })} multiline={true} placeholderTextColor="white" placeholder={note.note?.noteText} style={styles.textInputNote}></TextInput>
-            <Button color="green" onPress={() => saveEditedNote(note?.id)} title="Save edited note"></Button>
-            <Button color="red" title="Cancel" onPress={() => cancelEditNote()}></Button>
+            <TextInput value={editNote.date} onChangeText={value => setEditNote({ ...editNote, date: value })} placeholderTextColor='white' placeholder={note.note?.date} style={styles.textInput}></TextInput>
+            <TextInput value={editNote.title} onChangeText={value => setEditNote({ ...editNote, title: value })} placeholderTextColor='white' placeholder={note.note?.title} style={styles.textInput}></TextInput>
+            <TextInput value={editNote.noteText} onChangeText={value => setEditNote({ ...editNote, noteText: value })} multiline={true} placeholderTextColor='white' placeholder={note.note?.noteText} style={styles.textInputNote}></TextInput>
+            <Button color='green' onPress={() => saveEditedNote(note?.id)} title='Save edited note'></Button>
+            <Button color='red' title='Cancel' onPress={() => cancelEditNote()}></Button>
         </View>
     )
 }
