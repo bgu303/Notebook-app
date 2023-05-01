@@ -109,7 +109,7 @@ export default function NotesList() {
                             setNotes={setNotes}
                         />
                     )}
-                    {!isVisible && !menu &&  (
+                    {!isVisible && !menu && !addNoteDialog &&  (
                         <TextInput placeholderTextColor='white' placeholder='Search by date or title' onBlur={handleSearchStateOut} onFocus={handleSearchState} onChangeText={value => handleSearch(value)} style={styles.textInput}></TextInput>
                     )}
                     {!addNoteDialog && !menu && !isVisible && (

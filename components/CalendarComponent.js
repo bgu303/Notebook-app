@@ -53,7 +53,6 @@ export default function CalendarComponent() {
         const markedDatesObj = {};
         datesArray.forEach((date) => {
             markedDatesObj[date.date] = { marked: true, note: date.noteText, title: date.title }
-            console.log(markedDatesObj)
         })
         setLoading(true)
         setMarkedDates(markedDatesObj)
